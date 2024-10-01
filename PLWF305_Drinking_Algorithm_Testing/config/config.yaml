@@ -1,0 +1,25 @@
+# mqtt模拟环境url
+mqtt_environment:
+  demo: demo-svc.dl-aiot.com
+  test: test-svc.dl-aiot.com
+  us: mqtt.us.petlibro.com
+# mqtt端口号
+mqtt_port: 1883
+# 与代理通信之间允许的最长时间段（以秒为单位）
+keepalive: 60
+qos: 1
+WF305_USERNAME: T7NQEH8Z4XOVS4YT
+WF305_PASSWD: NINH41RZDN89OI68796SF14SB9GOF2GL
+
+# PLWF305测试设备SN
+WF305_SN: WF02013576881829L
+
+# RFID项圈SN
+RFID_SN_A: 130069255400024
+RFID_SN_B: 130066560209190
+
+# 水箱余量占比
+WF305_WEIGHT_PERCENT: 80
+
+
+
