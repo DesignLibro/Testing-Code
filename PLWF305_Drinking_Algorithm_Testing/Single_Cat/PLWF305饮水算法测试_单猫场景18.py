@@ -3,9 +3,9 @@
 '''
 @Author       : neil.fan
 @Date         : 2024/09/10 14:39
-@File         : PLWF305饮水算法测试_单猫场景1.py
+@File         : PLWF305饮水算法测试_单猫场景18.py
 @Interpreter Version: python 3.12
-@Description: 场景1：A猫饮水，持续60s，减少30ml水量（每秒减少0.5ml），期间A猫RFID出现60次；
+@Description: 场景18：A猫饮水，识别RFI60次，饮水15S，每秒饮水0.2ml，中断15S，继续饮水15S，每秒饮水0.2ml，中断饮水15S，共计饮水30S，6ml；
 '''
 
 import time
@@ -78,16 +78,16 @@ class MQTTProducer(object):
         '''发布消息'''
         # while True:
         self.getClient_id()
-        self.weight_percent_decrement = 0.5
+        self.weight_percent_decrement = 0.2
         self.time_increment = 1000
-        self.start_weight_percent = 2308
+        self.start_weight_percent = 2500
         self.previous_weight_percent = self.start_weight_percent
 
         for i in range(1, 2):
             '''定量上报1，心跳上报'''
             for a in range(1, 16):
                 current_time = int(time.time() * 1000)
-                self.msg4 = json.dumps(
+                self.msg11 = json.dumps(
                     {
                         "cmd": "HEARTBEAT",
                         "count": a,
@@ -97,13 +97,13 @@ class MQTTProducer(object):
                         "ts": current_time
                     }
                 )
-                result4 = client.publish(self.topic, self.msg4)
+                result4 = client.publish(self.topic, self.msg11)
                 status4 = result4[0]
                 if status4 == 0:
-                    logger.info(f"Send `{self.msg4}` to topic `{self.topic}`")
+                    logger.info(f"Send `{self.msg11}` to topic `{self.topic}`")
                 else:
                     self.remarks = f'Failed to send message to topic {self.topic}'
-                    logger.info(f'Failed to send message to topic {self.topic}')
+                    logger.info(f"Failed to send message to topic {self.topic}")
                 time.sleep(15)
 
                 current_time = int(time.time() * 1000)
@@ -215,10 +215,11 @@ class MQTTProducer(object):
                     self.remarks = f'Failed to send message to topic {self.topic}'
                     logger.info(f"Failed to send message to topic {self.topic}")
 
-            '''减量上报，心跳上报'''
-            for b in range(1, 3):
+            '''15S减量上报，心跳上报'''
+            for b in range(1, 2):
+                # RFID识别15S正常上报
                 current_time = int(time.time() * 1000)
-                self.msg5 = json.dumps(
+                self.msg12 = json.dumps(
                     {
                         "cmd": "HEARTBEAT",
                         "count": b + 10,
@@ -228,10 +229,10 @@ class MQTTProducer(object):
                         "ts": current_time
                     }
                 )
-                result5 = client.publish(self.topic, self.msg5)
+                result5 = client.publish(self.topic, self.msg12)
                 status5 = result5[0]
                 if status5 == 0:
-                    logger.info(f"Send `{self.msg5}` to topic `{self.topic}`")
+                    logger.info(f"Send `{self.msg12}` to topic `{self.topic}`")
                 else:
                     self.remarks = f'Failed to send message to topic {self.topic}'
                     logger.info(f"Failed to send message to topic {self.topic}")
@@ -363,28 +364,180 @@ class MQTTProducer(object):
 
                 self.previous_weight_percent -= (15 * self.weight_percent_decrement)
 
+            '''15S定量上报，心跳上报'''
+            for c in range(1, 2):
+                # RFID识别585S正常上报
                 current_time = int(time.time() * 1000)
-                self.msg5 = json.dumps(
+                self.msg13 = json.dumps(
                     {
                         "cmd": "HEARTBEAT",
-                        "count": b + 10,
+                        "count": c + 10,
                         "rssi": -46,
                         "wifiType": 1,
                         "msgId": f"{self.WF305_SN}{current_time}",
                         "ts": current_time
                     }
                 )
-                result5 = client.publish(self.topic, self.msg5)
+                result5 = client.publish(self.topic, self.msg13)
                 status5 = result5[0]
                 if status5 == 0:
-                    logger.info(f"Send `{self.msg5}` to topic `{self.topic}`")
+                    logger.info(f"Send `{self.msg13}` to topic `{self.topic}`")
                 else:
                     self.remarks = f'Failed to send message to topic {self.topic}'
                     logger.info(f"Failed to send message to topic {self.topic}")
                 time.sleep(15)
 
                 current_time = int(time.time() * 1000)
-                self.msg7 = json.dumps(
+                self.msg3 = json.dumps(
+                    {
+                        "cmd": "WATER_CAP_EVENT",
+                        "msgId": f"{self.WF305_SN}{current_time}",
+                        "content": [
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 1,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 2,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 3,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 4,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 5,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 6,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 7,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 8,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 9,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 10,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 11,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 12,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 13,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 14,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 15,
+                                "rfid": f"{self.RFID_SN_A}"
+                            }
+                        ],
+                        "ts": current_time + self.time_increment * 15
+                    }
+                )
+
+                result2 = client.publish(self.topic, self.msg3)
+                status2 = result2[0]
+                if status2 == 0:
+                    logger.info(f"Send `{self.msg3}` to topic `{self.topic}`")
+                else:
+                    self.remarks = f'Failed to send message to topic {self.topic}'
+                    logger.info(f"Failed to send message to topic {self.topic}")
+
+                # self.previous_weight_percent -= (15 * self.weight_percent_decrement)
+
+            '''15S减量上报，心跳上报'''
+            for d in range(1, 2):
+                # RFID识别15S正常上报
+                current_time = int(time.time() * 1000)
+                self.msg14 = json.dumps(
+                    {
+                        "cmd": "HEARTBEAT",
+                        "count": d + 10,
+                        "rssi": -46,
+                        "wifiType": 1,
+                        "msgId": f"{self.WF305_SN}{current_time}",
+                        "ts": current_time
+                    }
+                )
+                result5 = client.publish(self.topic, self.msg14)
+                status5 = result5[0]
+                if status5 == 0:
+                    logger.info(f"Send `{self.msg14}` to topic `{self.topic}`")
+                else:
+                    self.remarks = f'Failed to send message to topic {self.topic}'
+                    logger.info(f"Failed to send message to topic {self.topic}")
+                time.sleep(15)
+
+                current_time = int(time.time() * 1000)
+                self.msg4 = json.dumps(
                     {
                         "cmd": "WATER_CAP_EVENT",
                         "msgId": f"{self.WF305_SN}{current_time}",
@@ -499,33 +652,182 @@ class MQTTProducer(object):
                     }
                 )
 
-                result7 = client.publish(self.topic, self.msg7)
-                status7 = result7[0]
-                if status7 == 0:
-                    logger.info(f"Send `{self.msg7}` to topic `{self.topic}`")
+                result2 = client.publish(self.topic, self.msg4)
+                status2 = result2[0]
+                if status2 == 0:
+                    logger.info(f"Send `{self.msg4}` to topic `{self.topic}`")
                 else:
                     self.remarks = f'Failed to send message to topic {self.topic}'
                     logger.info(f"Failed to send message to topic {self.topic}")
 
                 self.previous_weight_percent -= (15 * self.weight_percent_decrement)
 
-            '''定量上报2，心跳上报'''
-            for c in range(1, 16):
+            '''15S定量上报，心跳上报'''
+            for e in range(1, 2):
+                # RFID识别585S正常上报
                 current_time = int(time.time() * 1000)
-                self.msg6 = json.dumps(
+                self.msg15 = json.dumps(
                     {
                         "cmd": "HEARTBEAT",
-                        "count": c + 13,
+                        "count": e + 10,
                         "rssi": -46,
                         "wifiType": 1,
                         "msgId": f"{self.WF305_SN}{current_time}",
                         "ts": current_time
                     }
                 )
-                result6 = client.publish(self.topic, self.msg6)
+                result5 = client.publish(self.topic, self.msg15)
+                status5 = result5[0]
+                if status5 == 0:
+                    logger.info(f"Send `{self.msg15}` to topic `{self.topic}`")
+                else:
+                    self.remarks = f'Failed to send message to topic {self.topic}'
+                    logger.info(f"Failed to send message to topic {self.topic}")
+                time.sleep(15)
+
+                current_time = int(time.time() * 1000)
+                self.msg5 = json.dumps(
+                    {
+                        "cmd": "WATER_CAP_EVENT",
+                        "msgId": f"{self.WF305_SN}{current_time}",
+                        "content": [
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 1,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 2,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 3,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 4,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 5,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 6,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 7,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 8,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 9,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 10,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 11,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 12,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 13,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 14,
+                                "rfid": f"{self.RFID_SN_A}"
+                            },
+                            {
+                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
+                                "weight": round(self.previous_weight_percent,
+                                                1),
+                                "ts": current_time + self.time_increment * 15,
+                                "rfid": f"{self.RFID_SN_A}"
+                            }
+                        ],
+                        "ts": current_time + self.time_increment * 15
+                    }
+                )
+
+                result2 = client.publish(self.topic, self.msg5)
+                status2 = result2[0]
+                if status2 == 0:
+                    logger.info(f"Send `{self.msg5}` to topic `{self.topic}`")
+                else:
+                    self.remarks = f'Failed to send message to topic {self.topic}'
+                    logger.info(f"Failed to send message to topic {self.topic}")
+
+                # self.previous_weight_percent -= (15 * self.weight_percent_decrement)
+
+            '''定量上报2，心跳上报'''
+            for f in range(1, 16):
+                current_time = int(time.time() * 1000)
+                self.msg16 = json.dumps(
+                    {
+                        "cmd": "HEARTBEAT",
+                        "count": f + 13,
+                        "rssi": -46,
+                        "wifiType": 1,
+                        "msgId": f"{self.WF305_SN}{current_time}",
+                        "ts": current_time
+                    }
+                )
+                result6 = client.publish(self.topic, self.msg16)
                 status6 = result6[0]
                 if status6 == 0:
-                    logger.info(f"Send `{self.msg6}` to topic `{self.topic}`")
+                    logger.info(f"Send `{self.msg16}` to topic `{self.topic}`")
                 else:
                     self.remarks = f'Failed to send message to topic {self.topic}'
                     logger.info(f"Failed to send message to topic {self.topic}")
@@ -533,7 +835,7 @@ class MQTTProducer(object):
 
                 current_time = int(time.time() * 1000)
                 self.weightPercent = self.previous_weight_percent
-                self.msg3 = json.dumps(
+                self.msg6 = json.dumps(
                     {
                         "cmd": "WATER_CAP_EVENT",
                         "msgId": f"{self.WF305_SN}{current_time}",
@@ -633,10 +935,10 @@ class MQTTProducer(object):
                     }
                 )
 
-                result3 = client.publish(self.topic, self.msg3)
+                result3 = client.publish(self.topic, self.msg6)
                 status3 = result3[0]
                 if status3 == 0:
-                    logger.info(f"Send `{self.msg3}` to topic `{self.topic}`")
+                    logger.info(f"Send `{self.msg6}` to topic `{self.topic}`")
                 else:
                     self.remarks = f'Failed to send message to topic {self.topic}'
                     logger.info(f"Failed to send message to topic {self.topic}")
