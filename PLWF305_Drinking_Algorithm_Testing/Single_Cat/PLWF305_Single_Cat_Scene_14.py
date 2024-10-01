@@ -3,7 +3,7 @@
 '''
 @Author       : neil.fan
 @Date         : 2024/09/10 14:39
-@File         : PLWF305饮水算法测试_单猫场景14.py
+@File         : PLWF305_Single_Cat_Scene_14.py
 @Interpreter Version: python 3.12
 @Description: 场景14：A猫饮水，识别RFID15次，每秒饮水1ml；
 '''

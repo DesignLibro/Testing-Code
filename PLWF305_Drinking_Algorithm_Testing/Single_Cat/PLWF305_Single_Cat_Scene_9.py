@@ -1,9 +1,11 @@
+# -*- coding:utf-8 -*-
+
 '''
 @Author       : neil.fan
 @Date         : 2024/09/10 14:39
-@File         : PLWF305饮水算法测试_单猫场景7.py
+@File         : PLWF305_Single_Cat_Scene_9.py
 @Interpreter Version: python 3.12
-@Description: 场景7：A猫饮水，饮水期间识别RFID信息，识别次数60次，每秒饮水0.5ml，持续60s，60S期间水量波动上下5ml；
+@Description: 场景9：A猫饮水，未识别A猫RFID信息，每秒饮水0.5ml，持续60s，B猫待在饮水机识别范围内，识别B猫RFID信息，RFID次数60次；
 '''
 
 import time
@@ -215,7 +217,7 @@ class MQTTProducer(object):
 
             '''减量上报，心跳上报'''
             for b in range(1, 5):
-                # RFID识别15S正常上报
+                # RFID识别到B猫项圈
                 current_time = int(time.time() * 1000)
                 self.msg5 = json.dumps(
                     {
@@ -244,108 +246,108 @@ class MQTTProducer(object):
                         "content": [
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": round(self.previous_weight_percent + 5 - self.weight_percent_decrement * 1,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 1,
                                                 1),
                                 "ts": current_time + self.time_increment * 1,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
                                 "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 2,
                                                 1),
                                 "ts": current_time + self.time_increment * 2,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": round(self.previous_weight_percent - 5 - self.weight_percent_decrement * 3,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 3,
                                                 1),
                                 "ts": current_time + self.time_increment * 3,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
                                 "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 4,
                                                 1),
                                 "ts": current_time + self.time_increment * 4,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": round(self.previous_weight_percent + 5 - self.weight_percent_decrement * 5,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 5,
                                                 1),
                                 "ts": current_time + self.time_increment * 5,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
                                 "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 6,
                                                 1),
                                 "ts": current_time + self.time_increment * 6,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": round(self.previous_weight_percent - 5 - self.weight_percent_decrement * 7,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 7,
                                                 1),
                                 "ts": current_time + self.time_increment * 7,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
                                 "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 8,
                                                 1),
                                 "ts": current_time + self.time_increment * 8,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": round(self.previous_weight_percent + 5 - self.weight_percent_decrement * 9,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 9,
                                                 1),
                                 "ts": current_time + self.time_increment * 9,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
                                 "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 10,
                                                 1),
                                 "ts": current_time + self.time_increment * 10,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": round(self.previous_weight_percent - 5 - self.weight_percent_decrement * 11,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 11,
                                                 1),
                                 "ts": current_time + self.time_increment * 11,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
                                 "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 12,
                                                 1),
                                 "ts": current_time + self.time_increment * 12,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": round(self.previous_weight_percent + 5 - self.weight_percent_decrement * 13,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 13,
                                                 1),
                                 "ts": current_time + self.time_increment * 13,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
                                 "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 14,
                                                 1),
                                 "ts": current_time + self.time_increment * 14,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": round(self.previous_weight_percent - 5 - self.weight_percent_decrement * 15,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 15,
                                                 1),
                                 "ts": current_time + self.time_increment * 15,
-                                "rfid": f"{self.RFID_SN_A}"
+                                "rfid": f"{self.RFID_SN_B}"
                             }
                         ],
                         "ts": current_time + self.time_increment * 15
