@@ -3,11 +3,9 @@
 '''
 @Author       : neil.fan
 @Date         : 2024/09/10 14:39
-@File         : PLWF305饮水算法测试_单猫场景2.py
+@File         : PLWF305_Single_Cat_Scene_11.py
 @Interpreter Version: python 3.12
-@Description: 场景2：水量有轻微波动（人在走动或者猫拍打样机，导致水量不稳场景），水箱重量时而增大，时而减少，但波动范围在上下10ml范围内，持续60s
-在波动期间A猫来饮水，持续30s，饮水6ml，触发了24次RFID（即15s一个循环内触发了12次RFID）
-预期：根据30s饮水时间，估算饮水量后上报成功，即出现 A猫 30s内饮水Xml的工作记录；
+@Description: 场景11：A猫饮水，水位持续30S上下波动，上下起伏5ml，波动过程中水饮水，识别RFID30次，每秒饮水0.5ml，水量平稳后继续饮水，识别RFID30次，每秒饮水0.5ml；
 '''
 
 import time
@@ -80,13 +78,13 @@ class MQTTProducer(object):
         '''发布消息'''
         # while True:
         self.getClient_id()
-        self.weight_percent_decrement = 1
+        self.weight_percent_decrement = 0.5
         self.time_increment = 1000
-        self.start_weight_percent = 2300
+        self.start_weight_percent = 2308
         self.previous_weight_percent = self.start_weight_percent
 
-        for i in range(1, 11):
-            '''定量上报，心跳上报'''
+        for i in range(1, 2):
+            '''定量上报1，心跳上报'''
             for a in range(1, 16):
                 current_time = int(time.time() * 1000)
                 self.msg4 = json.dumps(
@@ -217,10 +215,10 @@ class MQTTProducer(object):
                     self.remarks = f'Failed to send message to topic {self.topic}'
                     logger.info(f"Failed to send message to topic {self.topic}")
 
-            '''波动上报，心跳上报'''
+            '''波动上报2，心跳上报'''
             for a in range(1, 3):
                 current_time = int(time.time() * 1000)
-                self.msg9 = json.dumps(
+                self.msg4 = json.dumps(
                     {
                         "cmd": "HEARTBEAT",
                         "count": a,
@@ -230,126 +228,128 @@ class MQTTProducer(object):
                         "ts": current_time
                     }
                 )
-                result9 = client.publish(self.topic, self.msg9)
-                status9 = result9[0]
-                if status9 == 0:
-                    logger.info(f"Send `{self.msg9}` to topic `{self.topic}`")
+                result4 = client.publish(self.topic, self.msg4)
+                status4 = result4[0]
+                if status4 == 0:
+                    logger.info(f"Send `{self.msg4}` to topic `{self.topic}`")
                 else:
                     self.remarks = f'Failed to send message to topic {self.topic}'
                     logger.info(f"Failed to send message to topic {self.topic}")
                 time.sleep(15)
 
+                '''波动上报2'''
                 current_time = int(time.time() * 1000)
-                self.msg10 = json.dumps(
+                self.msg1 = json.dumps(
                     {
                         "cmd": "WATER_CAP_EVENT",
                         "msgId": f"{self.WF305_SN}{current_time}",
                         "content": [
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent + 10,
+                                "weight": self.previous_weight_percent + 5 - self.weight_percent_decrement * 1,
                                 "ts": current_time + self.time_increment * 1,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent,
+                                "weight": self.previous_weight_percent - self.weight_percent_decrement * 2,
                                 "ts": current_time + self.time_increment * 2,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent + 10,
+                                "weight": self.previous_weight_percent - 5 - self.weight_percent_decrement * 3,
                                 "ts": current_time + self.time_increment * 3,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent,
+                                "weight": self.previous_weight_percent - self.weight_percent_decrement * 4,
                                 "ts": current_time + self.time_increment * 4,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent + 10,
+                                "weight": self.previous_weight_percent + 5 - self.weight_percent_decrement * 5,
                                 "ts": current_time + self.time_increment * 5,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent,
+                                "weight": self.previous_weight_percent - self.weight_percent_decrement * 6,
                                 "ts": current_time + self.time_increment * 6,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent + 10,
+                                "weight": self.previous_weight_percent - 5 - self.weight_percent_decrement * 7,
                                 "ts": current_time + self.time_increment * 7,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent,
+                                "weight": self.previous_weight_percent - self.weight_percent_decrement * 8,
                                 "ts": current_time + self.time_increment * 8,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent + 10,
+                                "weight": self.previous_weight_percent + 5 - self.weight_percent_decrement * 9,
                                 "ts": current_time + self.time_increment * 9,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent,
+                                "weight": self.previous_weight_percent - self.weight_percent_decrement * 10,
                                 "ts": current_time + self.time_increment * 10,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent + 10,
+                                "weight": self.previous_weight_percent - 5 - self.weight_percent_decrement * 11,
                                 "ts": current_time + self.time_increment * 11,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent,
+                                "weight": self.previous_weight_percent - self.weight_percent_decrement * 12,
                                 "ts": current_time + self.time_increment * 12,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent + 10,
+                                "weight": self.previous_weight_percent + 5 - self.weight_percent_decrement * 13,
                                 "ts": current_time + self.time_increment * 13,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent,
+                                "weight": self.previous_weight_percent - self.weight_percent_decrement * 14,
                                 "ts": current_time + self.time_increment * 14,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": self.previous_weight_percent + 10,
+                                "weight": self.previous_weight_percent - self.weight_percent_decrement * 15,
                                 "ts": current_time + self.time_increment * 15,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             }
                         ],
                         "ts": current_time + self.time_increment * 15
                     }
                 )
 
-                result10 = client.publish(self.topic, self.msg10)
-                status10 = result10[0]
-                if status10 == 0:
-                    logger.info(f"Send `{self.msg10}` to topic `{self.topic}`")
+                result1 = client.publish(self.topic, self.msg1)
+                status1 = result1[0]
+                if status1 == 0:
+                    logger.info(f"Send `{self.msg1}` to topic `{self.topic}`")
                 else:
                     self.remarks = f'Failed to send message to topic {self.topic}'
                     logger.info(f"Failed to send message to topic {self.topic}")
 
             '''减量上报，心跳上报'''
-            for b in range(1, 2):
+            for b in range(1, 3):
+                # RFID识别15S正常上报
                 current_time = int(time.time() * 1000)
                 self.msg5 = json.dumps(
                     {
@@ -378,225 +378,108 @@ class MQTTProducer(object):
                         "content": [
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2300,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 1,
+                                                1),
                                 "ts": current_time + self.time_increment * 1,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2309,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 2,
+                                                1),
                                 "ts": current_time + self.time_increment * 2,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2298,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 3,
+                                                1),
                                 "ts": current_time + self.time_increment * 3,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2307,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 4,
+                                                1),
                                 "ts": current_time + self.time_increment * 4,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2296,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 5,
+                                                1),
                                 "ts": current_time + self.time_increment * 5,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2305,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 6,
+                                                1),
                                 "ts": current_time + self.time_increment * 6,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2294,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 7,
+                                                1),
                                 "ts": current_time + self.time_increment * 7,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2303,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 8,
+                                                1),
                                 "ts": current_time + self.time_increment * 8,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2292,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 9,
+                                                1),
                                 "ts": current_time + self.time_increment * 9,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2301,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 10,
+                                                1),
                                 "ts": current_time + self.time_increment * 10,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2290,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 11,
+                                                1),
                                 "ts": current_time + self.time_increment * 11,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2299,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 12,
+                                                1),
                                 "ts": current_time + self.time_increment * 12,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2288,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 13,
+                                                1),
                                 "ts": current_time + self.time_increment * 13,
                                 "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2298,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 14,
+                                                1),
                                 "ts": current_time + self.time_increment * 14,
-                                "rfid": ""
+                                "rfid": f"{self.RFID_SN_A}"
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2288,
+                                "weight": round(self.previous_weight_percent - self.weight_percent_decrement * 15,
+                                                1),
                                 "ts": current_time + self.time_increment * 15,
-                                "rfid": ""
-                            }
-                        ],
-                        "ts": current_time + self.time_increment * 15
-                    }
-                )
-
-                result2 = client.publish(self.topic, self.msg2)
-                status2 = result2[0]
-                if status2 == 0:
-                    logger.info(f"Send `{self.msg2}` to topic `{self.topic}`")
-                else:
-                    self.remarks = f'Failed to send message to topic {self.topic}'
-                    logger.info(f"Failed to send message to topic {self.topic}")
-
-                self.previous_weight_percent -= (15 * self.weight_percent_decrement)
-
-                '''减量上报2'''
-                current_time = int(time.time() * 1000)
-                self.msg5 = json.dumps(
-                    {
-                        "cmd": "HEARTBEAT",
-                        "count": b + 10,
-                        "rssi": -46,
-                        "wifiType": 1,
-                        "msgId": f"{self.WF305_SN}{current_time}",
-                        "ts": current_time
-                    }
-                )
-                result5 = client.publish(self.topic, self.msg5)
-                status5 = result5[0]
-                if status5 == 0:
-                    logger.info(f"Send `{self.msg5}` to topic `{self.topic}`")
-                else:
-                    self.remarks = f'Failed to send message to topic {self.topic}'
-                    logger.info(f"Failed to send message to topic {self.topic}")
-                time.sleep(15)
-
-                current_time = int(time.time() * 1000)
-                self.msg2 = json.dumps(
-                    {
-                        "cmd": "WATER_CAP_EVENT",
-                        "msgId": f"{self.WF305_SN}{current_time}",
-                        "content": [
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2297,
-                                "ts": current_time + self.time_increment * 1,
                                 "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2286,
-                                "ts": current_time + self.time_increment * 2,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2295,
-                                "ts": current_time + self.time_increment * 3,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2284,
-                                "ts": current_time + self.time_increment * 4,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2293,
-                                "ts": current_time + self.time_increment * 5,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2282,
-                                "ts": current_time + self.time_increment * 6,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2291,
-                                "ts": current_time + self.time_increment * 7,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2280,
-                                "ts": current_time + self.time_increment * 8,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2289,
-                                "ts": current_time + self.time_increment * 9,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2278,
-                                "ts": current_time + self.time_increment * 10,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2287,
-                                "ts": current_time + self.time_increment * 11,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2276,
-                                "ts": current_time + self.time_increment * 12,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2285,
-                                "ts": current_time + self.time_increment * 13,
-                                "rfid": f"{self.RFID_SN_A}"
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
-                                "ts": current_time + self.time_increment * 14,
-                                "rfid": ""
-                            },
-                            {
-                                "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
-                                "ts": current_time + self.time_increment * 15,
-                                "rfid": ""
                             }
                         ],
                         "ts": current_time + self.time_increment * 15
@@ -637,98 +520,98 @@ class MQTTProducer(object):
 
                 current_time = int(time.time() * 1000)
                 self.weightPercent = self.previous_weight_percent
-                self.msg3 = json.dumps(
+                self.msg6 = json.dumps(
                     {
                         "cmd": "WATER_CAP_EVENT",
                         "msgId": f"{self.WF305_SN}{current_time}",
                         "content": [
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 1,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 2,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 3,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 4,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 5,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 6,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 7,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 8,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 9,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 10,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 11,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 12,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 13,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 14,
                                 "rfid": ""
                             },
                             {
                                 "weightPercent": round((int(self.start_weight_percent / 3000 * 100)), -1),
-                                "weight": 2275,
+                                "weight": round(self.previous_weight_percent, 1),
                                 "ts": current_time + self.time_increment * 15,
                                 "rfid": ""
                             }
@@ -737,10 +620,10 @@ class MQTTProducer(object):
                     }
                 )
 
-                result3 = client.publish(self.topic, self.msg3)
+                result3 = client.publish(self.topic, self.msg6)
                 status3 = result3[0]
                 if status3 == 0:
-                    logger.info(f"Send `{self.msg3}` to topic `{self.topic}`")
+                    logger.info(f"Send `{self.msg6}` to topic `{self.topic}`")
                 else:
                     self.remarks = f'Failed to send message to topic {self.topic}'
                     logger.info(f"Failed to send message to topic {self.topic}")

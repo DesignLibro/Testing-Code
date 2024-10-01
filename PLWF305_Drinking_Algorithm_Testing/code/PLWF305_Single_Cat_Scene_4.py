@@ -3,7 +3,7 @@
 '''
 @Author       : neil.fan
 @Date         : 2024/09/13 10:18
-@File         : PLWF305饮水算法测试_单猫场景4.py
+@File         : PLWF305_Single_Cat_Scene_4.py
 @Interpreter Version: python 3.12
 @Description: 场景4：A猫前30S饮水可以识别RFID30次，每秒饮水0.2ml,后30S无法识别RFID，每秒饮水0.2ml，数据上报；
 '''
