@@ -1,0 +1,13 @@
+2024-03-31 19:33:20.032 | INFO     | lucky_code.designlibro_codes.main_codes.start_testCase.automated_test:test_AF103_unbindDevice:94 - 开始执行AF103解绑设备测试...
+2024-03-31 19:33:24.503 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_take_down_pop:takeDownoperationalPromotionPopup:114 - 所有pop_up弹窗下架成功
+2024-03-31 19:33:40.539 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_launch_apk:main:30 - 启动APP...
+2024-03-31 19:33:42.932 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_take_down_pop:takeDownoperationalPromotionPopup:114 - 所有pop_up弹窗下架成功
+2024-03-31 19:33:49.346 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:__init__:82 - 测试环境mysql数据库连接成功！
+2024-03-31 19:33:50.664 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:endOtaTask:183 - 结束ota任务id：3682
+2024-03-31 19:33:52.670 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:endOtaTask:186 - 所有PLAF103的进行中OTA任务都已结束
+2024-03-31 19:33:53.548 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_unbind_device:mainJudge:75 - step1：当前APP处于设备首页
+2024-03-31 19:33:57.419 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_unbind_device:longPressDeviceCard:90 - step2：APP首页长按设备卡片
+2024-03-31 19:33:58.825 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_unbind_device:longPressDeviceCard:94 - step3：点击删除设备卡片按钮
+2024-03-31 19:34:00.209 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_unbind_device:longPressDeviceCard:98 - step4：点击确认删除设备卡片按钮
+2024-03-31 19:34:02.566 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_unbind_device:unbindDeviceJudge:108 - Finally：AF103设备00:E0:4C:BD:DB:C4解绑设备用例执行成功
+2024-03-31 19:34:02.571 | INFO     | lucky_code.designlibro_codes.main_codes.start_testCase.automated_test:test_AF103_unbindDevice:97 - AF103解绑设备用例执行成功

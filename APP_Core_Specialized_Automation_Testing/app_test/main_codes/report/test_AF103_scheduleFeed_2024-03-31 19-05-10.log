@@ -1,0 +1,54 @@
+2024-03-31 19:05:10.230 | INFO     | lucky_code.designlibro_codes.main_codes.start_testCase.automated_test:test_AF103_scheduleFeed:72 - 开始执行AF103计划喂食测试...
+2024-03-31 19:05:14.675 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_take_down_pop:takeDownoperationalPromotionPopup:114 - 所有pop_up弹窗下架成功
+2024-03-31 19:05:30.385 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_launch_apk:main:30 - 启动APP...
+2024-03-31 19:05:32.780 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_take_down_pop:takeDownoperationalPromotionPopup:114 - 所有pop_up弹窗下架成功
+2024-03-31 19:05:39.233 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:__init__:82 - 测试环境mysql数据库连接成功！
+2024-03-31 19:05:39.835 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:endOtaTask:186 - 所有PLAF103的进行中OTA任务都已结束
+2024-03-31 19:05:40.695 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:mainJudge:89 - step1：当前APP处于设备首页
+2024-03-31 19:05:43.073 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:clickDeviceCard:104 - step1：点击首页设备卡片
+2024-03-31 19:05:45.507 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:deviceFaceJudge:112 - step2：跳转到设备面板
+2024-03-31 19:05:54.909 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:deviceFaceAboutSignalOrDual:129 - 点击单/双食盆蒙版的DONE按钮
+2024-03-31 19:05:55.346 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:clickDeviceFaceMealCall:135 - step3：点击设备面板底部的计划喂食入口
+2024-03-31 19:05:58.602 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:scheduleListFaceJudge:144 - step4：跳转到计划总列表界面
+2024-03-31 19:05:58.945 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:addAndSaveSchedule:161 - step5：点击计划总列表界面右上角入口
+2024-03-31 19:05:59.599 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:addAndSaveSchedule:164 - step6：跳转到计划编辑界面
+2024-03-31 19:06:02.190 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:swipeUpMin:82 - 正在向下滑动分钟数加1...
+2024-03-31 19:06:06.941 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:addAndSaveSchedule:179 - step7：设置计划喂食3份
+2024-03-31 19:06:12.004 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:addAndSaveSchedule:184 - step8：点击SAVE按钮
+2024-03-31 19:06:14.191 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:scheduleListFaceJudge:144 - step4：跳转到计划总列表界面
+2024-03-31 19:06:14.538 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:addAndSaveSchedule:198 - step9：点击左上角返回按钮
+2024-03-31 19:06:15.302 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:deviceFaceJudge:112 - step2：跳转到设备面板
+2024-03-31 19:09:32.849 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_schedule_feed:scheduleFeedNumJudge:230 - Finally：计划喂食3份成功
+2024-03-31 19:09:32.857 | INFO     | lucky_code.designlibro_codes.main_codes.start_testCase.automated_test:test_AF103_scheduleFeed:75 - AF103计划喂食用例执行成功
+2024-03-31 19:09:32.876 | INFO     | lucky_code.designlibro_codes.main_codes.start_testCase.automated_test:test_AF103_ota:83 - 开始执行AF103 ota测试...
+2024-03-31 19:09:37.286 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:__init__:82 - 测试环境mysql数据库连接成功！
+2024-03-31 19:09:37.936 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:endOtaTask:186 - 所有PLAF103的进行中OTA任务都已结束
+2024-03-31 19:09:37.936 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:getCurrentDeviceSN:212 - 00:E0:4C:BD:DB:C4
+2024-03-31 19:09:38.133 | INFO     | lucky_code.designlibro_codes.main_codes.tastCase.AF103_ota_CLASS_A_Android:judgeOTADirection:45 - 正在创建降级到1.0.48版本的OTA任务
+2024-03-31 19:09:38.134 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:getCurrentDeviceSN:212 - 00:E0:4C:BD:DB:C4
+2024-03-31 19:09:38.206 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:getCurrentDeviceSN:212 - 00:E0:4C:BD:DB:C4
+2024-03-31 19:09:38.791 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:createOTAJob:267 - 运营平台上OTA任务创建成功！---- 1.0.49--1.0.48_2024-03-31 19-09-38
+2024-03-31 19:09:40.943 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:startOTAJob:284 - 运营平台上OTA任务打开成功！
+2024-03-31 19:09:52.914 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_launch_apk:main:30 - 启动APP...
+2024-03-31 19:09:55.322 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_take_down_pop:takeDownoperationalPromotionPopup:114 - 所有pop_up弹窗下架成功
+2024-03-31 19:09:58.230 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:mainJudge:315 - step1：当前APP处于设备首页
+2024-03-31 19:10:00.629 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:clickDeviceCard:330 - 点击首页设备卡片
+2024-03-31 19:10:10.009 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:deviceFaceAboutSignalOrDual:355 - 点击单/双食盆蒙版的DONE按钮
+2024-03-31 19:10:10.214 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:otaFaceJudge:363 - step3：出现OTA弹框
+2024-03-31 19:10:12.563 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:clickOTAButton:377 - step4：点击确认升级按钮
+2024-03-31 19:10:16.854 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:otaWebJudge:386 - step5：当前处于OTA进度界面
+2024-03-31 19:11:29.532 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:otaResultJudge:402 - Finally：设备00:E0:4C:BD:DB:C4OTA 成功
+2024-03-31 19:11:29.534 | INFO     | lucky_code.designlibro_codes.main_codes.start_testCase.automated_test:test_AF103_ota:86 - AF103 ota用例执行成功
+2024-03-31 19:11:29.544 | INFO     | lucky_code.designlibro_codes.main_codes.start_testCase.automated_test:test_AF103_unbindDevice:94 - 开始执行AF103解绑设备测试...
+2024-03-31 19:11:33.920 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_take_down_pop:takeDownoperationalPromotionPopup:114 - 所有pop_up弹窗下架成功
+2024-03-31 19:11:49.509 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_launch_apk:main:30 - 启动APP...
+2024-03-31 19:11:51.899 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_take_down_pop:takeDownoperationalPromotionPopup:114 - 所有pop_up弹窗下架成功
+2024-03-31 19:11:58.348 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:__init__:82 - 测试环境mysql数据库连接成功！
+2024-03-31 19:11:59.683 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:endOtaTask:183 - 结束ota任务id：3681
+2024-03-31 19:12:01.687 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_build_ota_task:endOtaTask:186 - 所有PLAF103的进行中OTA任务都已结束
+2024-03-31 19:12:02.584 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_unbind_device:mainJudge:75 - step1：当前APP处于设备首页
+2024-03-31 19:12:06.446 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_unbind_device:longPressDeviceCard:90 - step2：APP首页长按设备卡片
+2024-03-31 19:12:07.859 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_unbind_device:longPressDeviceCard:94 - step3：点击删除设备卡片按钮
+2024-03-31 19:12:09.267 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_unbind_device:longPressDeviceCard:98 - step4：点击确认删除设备卡片按钮
+2024-03-31 19:12:11.579 | INFO     | lucky_code.designlibro_codes.main_codes.generalModule.general_unbind_device:unbindDeviceJudge:108 - Finally：AF103设备00:E0:4C:BD:DB:C4解绑设备用例执行成功
+2024-03-31 19:12:11.581 | INFO     | lucky_code.designlibro_codes.main_codes.start_testCase.automated_test:test_AF103_unbindDevice:97 - AF103解绑设备用例执行成功

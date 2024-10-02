@@ -1,0 +1,130 @@
+# -*- coding:utf-8 -*-
+
+# @Author       : baolong.wang
+# @Date         : 2024/2/4 11:26
+# @File         : config.yaml
+
+# 测试手机的固定参数
+desired_capabilities:
+  platformName: Android
+  platformVersion: '13'
+  deviceName: Pixel 5
+  automationName: UiAutomator2
+  appPackage: com.designlibro.petlibro
+  appActivity: .MainActivity
+  udid: 08121FDD40037Y
+  autoLaunch: true
+  noReset: true
+  fullReset: false
+  unicodeKeyboard: true
+  resetKeyboard: true
+  appium:newCommandTimeout: 360000
+  appium:waitForSelectorTimeout: 1000
+  appium:waitForIdleTimeout: 1000
+  keep_live: true
+
+# 测试手机的长宽像素
+width: 1080
+height: 2138
+
+# 绑定wifi1
+wifi1: TP-LINK_190E
+passwd1: '123456789'
+
+# 绑定wifi2
+wifi2: TP-LINK_DDBE_测试部
+passwd2: '12345678'
+
+# 测试APP账号
+user1: 999.999@999.com
+password1: Wr165896
+
+# 测试设备的MAC
+AF103_MAC: 00:E0:4C:BD:DB:C4
+
+# 测试设备的名称
+AF103_NAME: Granary Feeder
+
+# 测试设备的型号
+AF103_MODEL: AF103
+
+# 测试设备的名称
+AF103_PRODUCT_NAME: PLAF103
+AF107_PRODUCT_NAME: PLAF107
+AF108_PRODUCT_NAME: PLAF108
+AF109_PRODUCT_NAME: PLAF109
+AF105_PRODUCT_NAME: PLAF105
+AF203_PRODUCT_NAME: PLAF203
+AF301_PRODUCT_NAME: PLAF301
+
+# APP登录成功后在首页的判断超时时间(大于15的整数)
+mainTimeoutDuration: 30
+
+# 蓝牙搜索设备超时时间
+searchDeviceTimeoutDuration: 120
+
+# 蓝牙绑定设备的超时时间
+bluetoothBindingDeviceTimeout: 120
+
+# 自定义设备名称
+diyDeviceName: '123456'
+
+# 用例执行失败时的最大尝试次数
+failRetryCount: 2
+
+# 测试包的环境类型
+environmentTypeTest: test
+environmentTypeDemo: demo
+environmentTypeProd: prod
+
+# test环境运营平台URL
+test_operationPlatformLoginTokenURL: https://test-admin.dl-aiot.com/api/login/email/login
+test_getoperationPlatformLMarketingPromotionURL: https://test-admin.dl-aiot.com/api/promotion/page
+test_takeDownPopURL: https://test-admin.dl-aiot.com/api/promotion/unPublish
+test_getOTATaskListURL: https://test-admin.dl-aiot.com/api/deviceOta/page
+test_endOTATaskListURL: https://test-admin.dl-aiot.com/api/deviceOta/end
+test_getDeviceInfoURL: https://test-admin.dl-aiot.com/api/device/attributes
+test_deviceOtaSaveURL: https://test-admin.dl-aiot.com/api/deviceOta/save
+test_startOTAJobURL: https://test-admin.dl-aiot.com/api/deviceOta/start
+test_selectJobItemIDURL: https://test-admin.dl-aiot.com/api/deviceOta/itemPage
+test_exexuteOTAJobURL: https://test-api.dl-aiot.com/device/ota/doUpgrade
+
+# test环境运营平台authority
+test_operationPlatformLoginTokenAuthority: test-admin.dl-aiot.com
+
+# test环境运营平台origin
+test_operationPlatformLoginTokenOrigin: https://test-admin.dl-aiot.com
+
+# test环境运营平台referer
+test_operationPlatformLoginTokenReferer: https://test-admin.dl-aiot.com/
+
+# test环境运营平台账号密码：
+test_environment_operation_platform_account: lucky.wang@designlibro.com
+test_environment_operation_platform_passwd: Wr165896
+
+# 谷歌浏览器头部
+browser_header: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36
+
+# 文件服务器信息
+server_hostname: 192.168.10.105
+server_username: root
+server_password: Dl@admin123
+server_remote_path: /data/nginxWebUI/source/test/
+server_remote_path_record: /data/nginxWebUI/source/test/record/
+url_prefix: https://source.dl-aiot.com/test/record/
+phone_record_path: /storage/emulated/0/DCIM/RECORD/
+directory_path: C:\Users\leon1\PycharmProjects\appautoarichiverscript\lucky_code\designlibro_codes\main_codes\record\RECORD
+
+# 测试环境数据库信息
+test_host: test.dl-aiot.com
+test_port: 3306
+test_database: dl_cloud
+test_user: root
+test_password: HhB7WwxbWCNMxfJhkbqc
+test_charset: utf8
+test_redis_port: 6379
+test_redis_password: Df3jfsCMYDx7uHBtuj7Z
+
+# 设备固件版本信息
+AF103_HIGH_VERSION: 1.0.49
+AF103_LOW_VERSION: 1.0.48

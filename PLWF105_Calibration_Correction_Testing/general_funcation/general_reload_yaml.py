@@ -35,11 +35,10 @@ class ReloadYaml(object):
         self.mqtt_port = data['mqtt_port']  # mqtt端口号
         self.keepalive = data['keepalive']  # 与代理通信之间允许的最长时间段（以秒为单位）
         self.qos = data['qos']
-        self.WF305_USERNAME = data['WF305_USERNAME']
-        self.WF305_PASSWD = data['WF305_PASSWD']
+        self.WF105_USERNAME = data['WF105_USERNAME']
+        self.WF105_PASSWD = data['WF105_PASSWD']
 
-        self.WF305_SN = data['WF305_SN']
-        self.RFID_SN_A = data['RFID_SN_A']
-        self.RFID_SN_B = data['RFID_SN_B']
-        self.WF305_WEIGHT_PERCENT = data['WF305_WEIGHT_PERCENT']
+        self.WF105_SN = data['WF105_SN']
+        self.WF105_WEIGHT_PERCENT = data['WF105_WEIGHT_PERCENT']
+
 
