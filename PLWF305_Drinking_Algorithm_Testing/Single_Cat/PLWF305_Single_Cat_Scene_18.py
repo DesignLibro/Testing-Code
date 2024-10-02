@@ -3,7 +3,7 @@
 '''
 @Author       : neil.fan
 @Date         : 2024/09/10 14:39
-@File         : PLWF305饮水算法测试_单猫场景18.py
+@File         : PLWF305_Single_Cat_Scene_18.py
 @Interpreter Version: python 3.12
 @Description: 场景18：A猫饮水，识别RFI60次，饮水15S，每秒饮水0.2ml，中断15S，继续饮水15S，每秒饮水0.2ml，中断饮水15S，共计饮水30S，6ml；
 '''

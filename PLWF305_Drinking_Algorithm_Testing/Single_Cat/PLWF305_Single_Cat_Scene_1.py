@@ -3,7 +3,7 @@
 '''
 @Author       : neil.fan
 @Date         : 2024/09/10 14:39
-@File         : PLWF305饮水算法测试_单猫场景1.py
+@File         : PLWF305_Single_Cat_Scene_1.py
 @Interpreter Version: python 3.12
 @Description: 场景1：A猫饮水，持续60s，减少30ml水量（每秒减少0.5ml），期间A猫RFID出现60次；
 '''
