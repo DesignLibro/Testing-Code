@@ -3,6 +3,6 @@ PLWF105纠偏测试
 
 问题汇总：https://i7uduvdvau.feishu.cn/wiki/HzI7w4euriMHwzkpNWvcgnnynge
 
-PLWF105自动化测试脚本配置设备SN与RFID信息获取：https://i7uduvdvau.feishu.cn/wiki/GRqhwblmCiF39wkeCDTc5Tumnjc
+PLWF105自动化测试脚本配置设备SN信息获取：https://i7uduvdvau.feishu.cn/wiki/GRqhwblmCiF39wkeCDTc5Tumnjc
 
 
