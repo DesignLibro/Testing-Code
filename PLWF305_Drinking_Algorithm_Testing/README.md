@@ -3,4 +3,4 @@ PLWF305饮水算法测试
 
 问题汇总：https://i7uduvdvau.feishu.cn/wiki/YrsIwMHzniIg6ekkG3VcPXI0njh
 
-PLWF105,PLWF305自动化测试脚本配置设备SN与RFID信息获取：https://i7uduvdvau.feishu.cn/wiki/GRqhwblmCiF39wkeCDTc5Tumnjc
+PLWF305自动化测试脚本配置设备SN与RFID信息获取：https://i7uduvdvau.feishu.cn/wiki/GRqhwblmCiF39wkeCDTc5Tumnjc
